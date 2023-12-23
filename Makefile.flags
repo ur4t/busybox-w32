@@ -84,6 +84,17 @@ ifeq ($(lastword $(subst -, ,$(CC))),clang)
 CFLAGS += $(call cc-option,-Wno-string-plus-int -Wno-constant-logical-operand)
 endif
 
+# FIXME: remove warnings without disabling
+ifeq ($(CC),clang)
+CFLAGS += $(call cc-option,-Wno-declaration-after-statement)
+CFLAGS += $(call cc-option,-Wno-int-in-bool-context)
+CFLAGS += $(call cc-option,-Wno-unused-but-set-variable)
+CFLAGS += $(call cc-option,-Wno-misleading-indentation)
+CFLAGS += $(call cc-option,-Wno-address-of-packed-member)
+CFLAGS += $(call cc-option,-Wno-incompatible-pointer-types-discards-qualifiers)
+LDFLAGS += -fuse-ld=lld
+endif
+
 # FIXME: These warnings are at least partially to be concerned about and should
 # be fixed..
 #CFLAGS += $(call cc-option,-Wconversion,)
